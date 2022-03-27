@@ -20,6 +20,9 @@ import { useStyles } from './header.styles'
 import { useAuth } from '../../shared-files/useAuth'
 import { useAppDispatch } from 'redux/hooks/typedHooks'
 import { logout } from 'redux/slices/userSlice'
+import { Container, Divider } from '@mui/material'
+import AuthMenu from 'components/header/AuthMenu'
+import AnonymusMenu from './AnonymusMenu'
 
 const Header: React.FC = (): React.ReactElement => {
   const classes = useStyles()
@@ -30,7 +33,7 @@ const Header: React.FC = (): React.ReactElement => {
 
   const { isAuth } = useAuth()
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [isDrownerVisible, setIsDrownerVisible] = useState(location.pathname === RouteNames.HOME)
 
   const toggleDrawer = (isOpen: boolean, e?: React.KeyboardEvent | React.MouseEvent) => {
@@ -39,76 +42,33 @@ const Header: React.FC = (): React.ReactElement => {
     setIsDrownerVisible(isOpen)
   }
 
-  const handleMenu = (e: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(e.currentTarget)
-  }
+  // const handleMenu = (e: React.MouseEvent<HTMLElement>) => {
+  //   setAnchorEl(e.currentTarget)
+  // }
 
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
+  // const handleClose = () => {
+  //   setAnchorEl(null)
+  // }
 
-  const handleLogout = async () => {
-    await dispatch(logout())
-  }
+  // const handleLogout = async () => {
+  //   await dispatch(logout())
+  // }
 
   return (
     <>
       <AppBar position='static'>
-        <Toolbar>
-          <IconButton size='large' edge='start' color='inherit' aria-label='menu' sx={{ mr: 2 }} onClick={() => toggleDrawer(true)}>
-            <MenuIcon />
-          </IconButton>
+        <Container>
+          <Toolbar>
+            <IconButton size='large' edge='start' color='inherit' aria-label='menu' sx={{ mr: 2 }} onClick={() => toggleDrawer(true)}>
+              <MenuIcon />
+            </IconButton>
 
-          <Typography variant='h6' component='h6' sx={{ flexGrow: 1, cursor: 'pointer' }} onClick={() => navigate(RouteNames.HOME)}>
-            Навчання
-          </Typography>
-          {!isAuth ? (
-            <ToggleButtonGroup className={classes.registerLoginSection} value={location.pathname} exclusive>
-              <ToggleButton onClick={() => navigate(RouteNames.LOGIN)} value={RouteNames.LOGIN}>
-                Увійти
-              </ToggleButton>
-              <ToggleButton onClick={() => navigate(RouteNames.REGISTER)} value={RouteNames.REGISTER}>
-                Зареєструватися
-              </ToggleButton>
-            </ToggleButtonGroup>
-          ) : (
-            <>
-              <div>
-                <IconButton
-                  size='large'
-                  aria-label='account of current user'
-                  aria-controls='menu-appbar'
-                  aria-haspopup='true'
-                  onClick={handleMenu}
-                  color='inherit'
-                >
-                  <AccountCircle />
-                </IconButton>
-                <Menu
-                  id='menu-appbar'
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                </Menu>
-              </div>
-              <Button onClick={handleLogout} color='inherit'>
-                Выйти
-              </Button>
-            </>
-          )}
-        </Toolbar>
+            <Typography variant='h6' component='h6' sx={{ flexGrow: 1, cursor: 'pointer' }} onClick={() => navigate(RouteNames.HOME)}>
+              Навчання
+            </Typography>
+            {isAuth ? <AuthMenu /> : <AnonymusMenu />}
+          </Toolbar>
+        </Container>
       </AppBar>
 
       <SwipeableDrawer open={isDrownerVisible} onClose={() => toggleDrawer(false)} onOpen={() => toggleDrawer(true)}>

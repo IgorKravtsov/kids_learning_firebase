@@ -5,6 +5,7 @@ import { logOutUser, setUser } from 'redux/slices/userSlice'
 import './App.css'
 import Header from '../header/Header'
 import AppRouter from '../../AppLayout'
+import { transformUser } from 'utils/transformUser'
 
 const App: React.FC = (): React.ReactElement => {
   const dispatch = useAppDispatch()
@@ -13,8 +14,7 @@ const App: React.FC = (): React.ReactElement => {
     const auth = getAuth()
     onAuthStateChanged(auth, user => {
       if (user) {
-        dispatch(setUser(user))
-        const uid = user.uid
+        dispatch(setUser(transformUser(user)))
       } else {
         dispatch(logOutUser())
       }
