@@ -6,15 +6,17 @@ import './App.css'
 import Header from '../header/Header'
 import AppRouter from '../../AppLayout'
 import { transformUser } from 'utils/transformUser'
+import { getUserById } from 'api/user/user'
 
 const App: React.FC = (): React.ReactElement => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     const auth = getAuth()
-    onAuthStateChanged(auth, user => {
+    onAuthStateChanged(auth, async user => {
       if (user) {
-        dispatch(setUser(transformUser(user)))
+        const responseUser = await getUserById(user.uid)
+        dispatch(setUser(transformUser(user, responseUser)))
       } else {
         dispatch(logOutUser())
       }

@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
+import { useStyles } from './adminPanel.styles'
 
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-
-import { useNavigate } from 'react-router-dom'
 
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
@@ -12,17 +11,13 @@ import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-import { RouteNames } from '../../routes'
-import { useStyles } from './register.styles'
-import { useAppDispatch } from 'redux/hooks/typedHooks'
-import { register } from 'redux/slices/userSlice'
 import Form from './components/Form'
 
-const Register: React.FC = (): React.ReactElement => {
+const AdminPanel: React.FC = (): React.ReactElement => {
   const classes = useStyles()
 
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
+  // const dispatch = useAppDispatch()
+  // const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -48,12 +43,12 @@ const Register: React.FC = (): React.ReactElement => {
     const { email, password } = data
 
     setIsLoading(true)
-    const response = await dispatch(register({ email, password }))
+    // const response = await dispatch(register({ email, password }))
     setIsLoading(false)
 
-    if (response?.meta.requestStatus !== 'rejected') {
-      navigate(RouteNames.HOME)
-    }
+    // if (response?.meta.requestStatus !== 'rejected') {
+    //   navigate(RouteNames.HOME)
+    // }
   }
 
   return (
@@ -64,20 +59,13 @@ const Register: React.FC = (): React.ReactElement => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography variant='h5' className={classes.title}>
-            Реєстрація
+            Реєстрація адміністратора
           </Typography>
         </Grid>
         <Form formFeatures={formFeatures} onSubmit={onSubmit} onError={onError} isLoading={isLoading} />
-        {/* <Typography variant='body2' className={classes.forgotPassLabel}>
-          <Link to='#'>Забыли пароль?</Link>
-        </Typography>
-        <Typography variant='body2'>
-          {' '}
-          Уже есть аккаунт?<Link to={RouteNames.LOGIN}>Войти</Link>
-        </Typography> */}
       </Paper>
     </Grid>
   )
 }
 
-export default Register
+export default AdminPanel

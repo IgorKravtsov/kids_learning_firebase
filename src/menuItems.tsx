@@ -6,6 +6,7 @@ import BookIcon from '@mui/icons-material/Book'
 import SumsIcon from '@mui/icons-material/Calculate'
 import RegisterIcon from '@mui/icons-material/VpnKey'
 import LoginIcon from '@mui/icons-material/Login'
+import AdminPanelIcon from '@mui/icons-material/AdminPanelSettings'
 
 import { BookRoutes, MathRoutes, RouteNames } from './routes'
 
@@ -64,6 +65,16 @@ export const unLoggedUserMenuList: MenuItem[] = [
     name: 'Зареєструватися',
     icon: <RegisterIcon />,
     link: RouteNames.REGISTER,
+    // items: [{ id: Math.random().toString(36).substring(2, 7).toString(), name: 'Учебники', icon: <BookIcon />, link: BookRoutes.RUSSIAN }],
+  },
+]
+
+export const adminAdditionalMenuItems: MenuItem[] = [
+  {
+    id: Math.random().toString(36).substring(2, 7).toString(),
+    name: 'Адміністративна панель',
+    icon: <AdminPanelIcon />,
+    link: RouteNames.ADMIN_PANEL,
     // items: [{ id: Math.random().toString(36).substring(2, 7).toString(), name: 'Учебники', icon: <BookIcon />, link: BookRoutes.RUSSIAN }],
   },
 ]

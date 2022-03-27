@@ -8,5 +8,6 @@ export const useAuth = () => {
     user,
     error,
     isAuth: user !== null,
+    isAdmin: user?.isAdmin,
   }
 }

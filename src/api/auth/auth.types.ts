@@ -17,6 +17,7 @@ export interface AppUser {
   phoneNumber: string | null
   photoURL: string | null
   displayName: string | null
+  isAdmin: boolean
   // providerData: ProviderData[];
   // stsTokenManager: StsTokenManager;
   // createdAt: string;

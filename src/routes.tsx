@@ -10,6 +10,7 @@ const MathBooks = React.lazy(() => import('./pages/Math/books/Books'))
 const MathSums = React.lazy(() => import('./pages/Math/sums/Sums'))
 const Login = React.lazy(() => import('./pages/Login/Login'))
 const Register = React.lazy(() => import('./pages/Register/Register'))
+const AdminPanel = React.lazy(() => import('./pages/AdminPanel/AdminPanel'))
 
 export enum RouteNames {
   HOME = '/',
@@ -19,6 +20,7 @@ export enum RouteNames {
   ART = '/art',
   LOGIN = '/login',
   REGISTER = '/register',
+  ADMIN_PANEL = '/admin_panel',
 }
 
 export const BookRoutes = {
@@ -51,6 +53,11 @@ export const authRoutes: React.ReactNode[] = [
   <Route key={RouteNames.RUSSIAN} path={RouteNames.RUSSIAN} element={<Russian />}></Route>,
 
   <Route key={RouteNames.ART} path={RouteNames.ART} element={<Art />}></Route>,
+]
+
+export const adminRoutes: React.ReactNode[] = [
+  // [...authRoutes],
+  <Route key={RouteNames.ADMIN_PANEL} path={RouteNames.ADMIN_PANEL} element={<AdminPanel />} />,
 ]
 
 // export interface IRoute {
