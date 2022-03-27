@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 
-import { Link, useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+
+import { useNavigate } from 'react-router-dom'
 
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import Avatar from '@mui/material/Avatar'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
@@ -14,6 +16,7 @@ import { RouteNames } from '../../routes'
 import { useStyles } from './register.styles'
 import { useAppDispatch } from 'redux/hooks/typedHooks'
 import { register } from 'redux/slices/userSlice'
+import Form from './components/Form'
 
 const Register: React.FC = (): React.ReactElement => {
   const classes = useStyles()
@@ -21,15 +24,33 @@ const Register: React.FC = (): React.ReactElement => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const [email, setEmail] = useState('superletsplay7@gmail.com')
-  const [password, setPassword] = useState('111111')
-  const [confirmPass, setConfirmPass] = useState('111111')
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (password !== confirmPass) return
+  const validationSchema = yup.object({
+    email: yup.string().email('Це не є правильною поштою').required('Це поле має бути заповнено'),
+    password: yup.string().min(6, 'Мінімальне кол-во символів - 6').required('Це поле має бути заповнено'),
+    confirmPass: yup
+      .string()
+      .oneOf([yup.ref('password'), null], 'Це поле має співпадати з полем паролю')
+      .required('Це поле є обов`язковим'),
+  })
+  type SubmitData = yup.InferType<typeof validationSchema>
 
+  const formFeatures = useForm({
+    resolver: yupResolver(validationSchema),
+  })
+
+  const onError = (e: any) => {
+    console.log('===ERROR===', e)
+  }
+
+  const onSubmit = async (data: SubmitData) => {
+    const { email, password } = data
+
+    setIsLoading(true)
     const response = await dispatch(register({ email, password }))
+    setIsLoading(false)
+
     if (response?.meta.requestStatus !== 'rejected') {
       navigate(RouteNames.HOME)
     }
@@ -43,10 +64,11 @@ const Register: React.FC = (): React.ReactElement => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography variant='h5' className={classes.title}>
-            Регистрация
+            Реєстрація
           </Typography>
         </Grid>
-        <form onSubmit={handleSubmit}>
+        <Form formFeatures={formFeatures} onSubmit={onSubmit} onError={onError} isLoading={isLoading} />
+        {/* <form onSubmit={handleSubmit}>
           <TextField
             value={email}
             onChange={e => setEmail(e.target.value)}
@@ -79,7 +101,7 @@ const Register: React.FC = (): React.ReactElement => {
           <Button type='submit' color='primary' variant='contained' className={classes.btn} fullWidth>
             Зарегистрироваться
           </Button>
-        </form>
+        </form> */}
         {/* <Typography variant='body2' className={classes.forgotPassLabel}>
           <Link to='#'>Забыли пароль?</Link>
         </Typography>

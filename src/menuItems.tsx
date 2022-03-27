@@ -4,6 +4,9 @@ import UkrainianIcon from '@mui/icons-material/AbcTwoTone'
 import ArtIcon from '@mui/icons-material/PhotoAlbum'
 import BookIcon from '@mui/icons-material/Book'
 import SumsIcon from '@mui/icons-material/Calculate'
+import RegisterIcon from '@mui/icons-material/VpnKey'
+import LoginIcon from '@mui/icons-material/Login'
+
 import { BookRoutes, MathRoutes, RouteNames } from './routes'
 
 export type MenuItem = {
@@ -45,5 +48,22 @@ export const subjects: MenuItem[] = [
     icon: <ArtIcon />,
     link: RouteNames.ART,
     items: [{ id: Math.random().toString(36).substring(2, 7).toString(), name: 'Учебники', icon: <BookIcon />, link: BookRoutes.ART }],
+  },
+]
+
+export const unLoggedUserMenuList: MenuItem[] = [
+  {
+    id: Math.random().toString(36).substring(2, 7).toString(),
+    name: 'Увійти',
+    icon: <LoginIcon />,
+    link: RouteNames.LOGIN,
+    // items: [{ id: Math.random().toString(36).substring(2, 7).toString(), name: 'Учебники', icon: <BookIcon />, link: BookRoutes.RUSSIAN }],
+  },
+  {
+    id: Math.random().toString(36).substring(2, 7).toString(),
+    name: 'Зареєструватися',
+    icon: <RegisterIcon />,
+    link: RouteNames.REGISTER,
+    // items: [{ id: Math.random().toString(36).substring(2, 7).toString(), name: 'Учебники', icon: <BookIcon />, link: BookRoutes.RUSSIAN }],
   },
 ]

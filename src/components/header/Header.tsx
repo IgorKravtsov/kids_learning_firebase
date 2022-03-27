@@ -65,10 +65,10 @@ const Header: React.FC = (): React.ReactElement => {
           {!isAuth ? (
             <ToggleButtonGroup className={classes.registerLoginSection} value={location.pathname} exclusive>
               <ToggleButton onClick={() => navigate(RouteNames.LOGIN)} value={RouteNames.LOGIN}>
-                Войти
+                Увійти
               </ToggleButton>
               <ToggleButton onClick={() => navigate(RouteNames.REGISTER)} value={RouteNames.REGISTER}>
-                Зарегистрироваться
+                Зареєструватися
               </ToggleButton>
             </ToggleButtonGroup>
           ) : (

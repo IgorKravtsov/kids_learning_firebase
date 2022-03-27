@@ -7,7 +7,7 @@ import Container from '@mui/material/Container'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 
-import { MenuItem, subjects } from '../../subjects'
+import { MenuItem, subjects } from '../../menuItems'
 
 const Math: React.FC = (): React.ReactElement => {
   const [value, setValue] = React.useState(0)

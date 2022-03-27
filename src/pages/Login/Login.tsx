@@ -1,22 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { Link, useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+
+import { useNavigate } from 'react-router-dom'
 
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import Avatar from '@mui/material/Avatar'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import Checkbox from '@mui/material/Checkbox'
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { RouteNames } from '../../routes'
 import { useStyles } from './login.styles'
-import { useState } from 'react'
 import { login } from 'redux/slices/userSlice'
 import { useAppDispatch } from 'redux/hooks/typedHooks'
+
+import Form from './components/Form'
+import { error } from 'redux/slices/snackbarSlice'
 
 const Login: React.FC = (): React.ReactElement => {
   const classes = useStyles()
@@ -24,16 +26,38 @@ const Login: React.FC = (): React.ReactElement => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const [email, setEmail] = useState('superletsplay7@gmail.com')
-  const [password, setPassword] = useState('111111')
-  const [remmemberMe, setRemmemberMe] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const validationSchema = yup.object({
+    email: yup.string().email('Це не є правильною поштою').required('Це поле має бути заповнено'),
+    password: yup.string().min(6, 'Мінімальне кол-во символів - 6').required('Це поле має бути заповнено'),
+  })
+  type SubmitData = yup.InferType<typeof validationSchema>
 
-    const response = await dispatch(login({ email, password }))
+  const formFeatures = useForm({
+    resolver: yupResolver(validationSchema),
+  })
+
+  const onError = (e: any) => {
+    console.log('===ERROR===', e)
+  }
+
+  const onSubmit = async (data: SubmitData) => {
+    const { email, password } = data
+
+    setIsLoading(true)
+    const response = (await dispatch(login({ email, password }))) as any
+    setIsLoading(false)
+    console.log('===response===', response)
+
     if (response?.meta.requestStatus !== 'rejected') {
       navigate(RouteNames.HOME)
+    } else {
+      dispatch(
+        error({
+          message: response?.error?.message || 'Помилка серверу',
+        })
+      )
     }
   }
 
@@ -45,29 +69,11 @@ const Login: React.FC = (): React.ReactElement => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography variant='h5' className={classes.title}>
-            Вход
+            Вхід
           </Typography>
         </Grid>
-        <form onSubmit={handleSubmit}>
-          <TextField value={email} onChange={e => setEmail(e.target.value)} label='Почта' placeholder='Введите почту...' fullWidth required />
-          <TextField
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            label='Пароль'
-            placeholder='Введите пароль...'
-            type='password'
-            fullWidth
-            required
-            className={classes.password}
-          />
-          <FormControlLabel
-            control={<Checkbox value={remmemberMe} onChange={e => setRemmemberMe(e.target.checked)} name='remmemberMe' color='primary' />}
-            label='Запомнить меня'
-          />
-          <Button type='submit' color='primary' variant='contained' className={classes.btn} fullWidth>
-            Войти
-          </Button>
-        </form>
+
+        <Form isLoading={isLoading} formFeatures={formFeatures} onSubmit={onSubmit} onError={onError} />
         {/* <Typography variant='body2' className={classes.forgotPass}>
           <Link to='#'>Забыли пароль?</Link>
         </Typography>
