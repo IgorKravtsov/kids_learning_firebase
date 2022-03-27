@@ -15,8 +15,6 @@ export interface DrownerListProps {
 const DrawerList: React.FC<DrownerListProps> = ({ toggleFunc }): React.ReactElement => {
   const { isAuth, isAdmin, user } = useAuth()
 
-  console.log('=user=', user)
-
   return (
     <Box sx={{ width: 250 }} role='presentation'>
       <List>

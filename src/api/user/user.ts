@@ -21,7 +21,6 @@ export const getUserByEmail = async (email: string) => {
   querySnapshot.forEach(doc => {
     // doc.data() is never undefined for query doc snapshots
     res.push(doc.data())
-    console.log(doc.id, ' => ', doc.data())
   })
 
   return res[0]

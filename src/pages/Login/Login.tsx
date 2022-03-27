@@ -48,7 +48,7 @@ const Login: React.FC = (): React.ReactElement => {
     setIsLoading(true)
     const response = (await dispatch(login({ email, password }))) as any
     setIsLoading(false)
-    console.log('===response===', response)
+    // console.log('===response===', response)
 
     if (response?.meta.requestStatus !== 'rejected') {
       navigate(RouteNames.HOME)
