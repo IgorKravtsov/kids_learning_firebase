@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useStyles } from '../login.styles'
 
 import { UseFormReturn } from 'react-hook-form'
@@ -6,9 +6,10 @@ import { FormProvider } from 'react-hook-form'
 
 import LoadingButton from '@mui/lab/LoadingButton'
 import SendIcon from '@mui/icons-material/Send'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
 
 import FormInput from 'components/formInput/FormInput'
-import FormCheckbox from 'components/formCheckbox/FormCheckbox'
 
 export interface FormProps {
   formFeatures: UseFormReturn<any, any>
@@ -21,6 +22,8 @@ export interface FormProps {
 
 const Form: React.FC<FormProps> = ({ formFeatures, onSubmit, onError, isLoading = false }): React.ReactElement => {
   const classes = useStyles()
+
+  const [isShowPass, setIsShowPass] = useState(false)
 
   const {
     handleSubmit,
@@ -42,10 +45,13 @@ const Form: React.FC<FormProps> = ({ formFeatures, onSubmit, onError, isLoading 
           label='Пароль'
           placeholder='Уведіть пароль...'
           className={classes.password}
-          type='password'
+          type={!isShowPass ? 'password' : 'text'}
         />
 
-        {/* <FormCheckbox control={control} label={'Запомнить меня'} /> */}
+        <FormControlLabel
+          control={<Checkbox value={isShowPass} onChange={e => setIsShowPass(e.target.checked)} color='primary' />}
+          label={'Показати пароль'}
+        />
 
         <LoadingButton
           loading={isLoading}

@@ -9,12 +9,13 @@ import Checkbox from '@mui/material/Checkbox'
 export interface FormCheckboxProps extends Partial<CheckboxProps> {
   control: Control<FieldValues, any>
   label?: string
+  name: string
 }
 
-const FormCheckbox: React.FC<FormCheckboxProps> = ({ control, label = '' }): React.ReactElement => {
+const FormCheckbox: React.FC<FormCheckboxProps> = ({ control, label = '', name }): React.ReactElement => {
   return (
     <FormControlLabel
-      control={<Controller control={control} name='remmemberMe' render={({ field }) => <Checkbox {...field} color='primary' />} />}
+      control={<Controller control={control} name={name} render={({ field }) => <Checkbox {...field} color='primary' />} />}
       label={label}
     />
   )
