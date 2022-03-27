@@ -1,0 +1,11 @@
+.link {
+  text-decoration: none;
+  color: inherit;
+  display: inherit;
+}
+
+.MuiAccordion-root {
+  &::before {
+    content: '';
+  }
+}
