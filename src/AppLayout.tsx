@@ -6,10 +6,10 @@ import Alert from '@mui/material/Alert'
 import Slide from '@mui/material/Slide'
 
 import { defaultRoutes, RouteNames, authRoutes, adminRoutes } from './routes'
-import { useAuth } from './shared-files/useAuth'
-import { useAppSelector } from 'redux/hooks/typedHooks'
+import { useAuth } from 'shared-files/useAuth'
+import { useAppSelector, useAppDispatch } from 'redux/hooks/typedHooks'
 import { clear, selectSnackbar } from 'redux/slices/snackbarSlice'
-import { useAppDispatch } from './redux/hooks/typedHooks'
+
 import LoadingSkeleton from 'components/loadingSkeleton/LoadingSkeleton'
 
 const AppRouter: React.FC = (): React.ReactElement => {

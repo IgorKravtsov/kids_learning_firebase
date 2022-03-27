@@ -1,11 +1,18 @@
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential, signOut, updateCurrentUser } from 'firebase/auth'
 import { getUserById } from 'api/user/user'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential, signOut, updateCurrentUser } from 'firebase/auth'
+import { usersCollectionName } from 'api/user/user.types'
+import { auth, db } from 'config/firebase.config'
+import { addDoc, collection } from 'firebase/firestore'
 import { transformUser } from 'utils/transformUser'
 
-export const auth = getAuth()
+const usersRef = collection(db, usersCollectionName)
 
 export const registerUser = async (email: string, password: string) => {
   const response: UserCredential = await createUserWithEmailAndPassword(auth, email, password)
+  await addDoc(usersRef, {
+    isAdmin: false,
+    email,
+  })
   return transformUser(response.user)
 }
 

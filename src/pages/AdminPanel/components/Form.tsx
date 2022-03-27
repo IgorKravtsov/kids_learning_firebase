@@ -36,13 +36,13 @@ const Form: React.FC<FormProps> = ({ formFeatures, onSubmit, onError, isLoading 
   return (
     <FormProvider {...formFeatures}>
       <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <FormInput name='email' control={control} errors={errors} label='Пошта' placeholder='Уведіть пошту...' />
+        <FormInput name='email' control={control} errors={errors} label='Пошта адміна' placeholder='Уведіть пошту адміна...' />
         <FormInput
           name='password'
           control={control}
           errors={errors}
-          label='Пароль'
-          placeholder='Уведіть пароль...'
+          label='Пароль адміна'
+          placeholder='Уведіть пароль адміна...'
           className={classes.passwordField}
           type={!isShowPass ? 'password' : 'text'}
         />
@@ -50,8 +50,8 @@ const Form: React.FC<FormProps> = ({ formFeatures, onSubmit, onError, isLoading 
           name='confirmPass'
           control={control}
           errors={errors}
-          label='Повторіть пароль'
-          placeholder='Підтвердіть пароль...'
+          label='Повторіть пароль адміна'
+          placeholder='Підтвердіть пароль адміна...'
           className={classes.passwordField}
           type={!isShowPass ? 'password' : 'text'}
         />
@@ -71,7 +71,7 @@ const Form: React.FC<FormProps> = ({ formFeatures, onSubmit, onError, isLoading 
           fullWidth
           endIcon={<SendIcon />}
         >
-          Зареєструватися
+          Зареєструвати адміна
         </LoadingButton>
       </form>
     </FormProvider>

@@ -12,9 +12,12 @@ import Typography from '@mui/material/Typography'
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Form from './components/Form'
+import { registerAdmin } from 'api/user/user'
+import { useAuth } from 'shared-files/useAuth'
 
 const AdminPanel: React.FC = (): React.ReactElement => {
   const classes = useStyles()
+  const { user } = useAuth()
 
   // const dispatch = useAppDispatch()
   // const navigate = useNavigate()
@@ -41,9 +44,12 @@ const AdminPanel: React.FC = (): React.ReactElement => {
 
   const onSubmit = async (data: SubmitData) => {
     const { email, password } = data
+    console.log('НЕ ПРАЦЮЄ ЩЕ!!!')
+
+    if (!user) return
 
     setIsLoading(true)
-    // const response = await dispatch(register({ email, password }))
+    // const response = await registerAdmin(email, password, user)
     setIsLoading(false)
 
     // if (response?.meta.requestStatus !== 'rejected') {
@@ -59,7 +65,7 @@ const AdminPanel: React.FC = (): React.ReactElement => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography variant='h5' className={classes.title}>
-            Реєстрація адміністратора
+            Реєстрація адміна
           </Typography>
         </Grid>
         <Form formFeatures={formFeatures} onSubmit={onSubmit} onError={onError} isLoading={isLoading} />
