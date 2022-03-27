@@ -11,15 +11,18 @@ export const useStyles = makeStyles({
     backgroundColor: '#1bbd7e',
   },
   btn: {
-    margin: '8px 0 !important',
+    margin: '45px 0 30px 0 !important',
   },
   emailField: {
-    marginTop: '20px !important',
+    // marginTop: '20px !important',
   },
   passwordField: {
     marginTop: '10px !important',
   },
   forgotPassLabel: {
     marginTop: '25px !important',
+  },
+  title: {
+    margin: '20px 0 !important',
   },
 })

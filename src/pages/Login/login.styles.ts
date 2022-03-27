@@ -11,7 +11,7 @@ export const useStyles = makeStyles({
     backgroundColor: '#1bbd7e',
   },
   btn: {
-    margin: '8px 0 !important',
+    margin: '45px 0 30px 0 !important',
   },
   title: {
     margin: '20px 0 !important',

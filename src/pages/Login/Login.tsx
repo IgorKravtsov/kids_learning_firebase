@@ -31,8 +31,8 @@ const Login: React.FC = (): React.ReactElement => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const res = await dispatch(login({ email, password }))
-    if (res?.meta.requestStatus !== 'rejected') {
+    const response = await dispatch(login({ email, password }))
+    if (response?.meta.requestStatus !== 'rejected') {
       navigate(RouteNames.HOME)
     }
   }
@@ -45,7 +45,7 @@ const Login: React.FC = (): React.ReactElement => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography variant='h5' className={classes.title}>
-            Войти
+            Вход
           </Typography>
         </Grid>
         <form onSubmit={handleSubmit}>
@@ -68,13 +68,13 @@ const Login: React.FC = (): React.ReactElement => {
             Войти
           </Button>
         </form>
-        <Typography variant='body2' className={classes.forgotPass}>
+        {/* <Typography variant='body2' className={classes.forgotPass}>
           <Link to='#'>Забыли пароль?</Link>
         </Typography>
         <Typography variant='body2'>
           {' '}
           Еще нет аккаунта?<Link to={RouteNames.REGISTER}>Зарегистрироваться</Link>
-        </Typography>
+        </Typography> */}
       </Paper>
     </>
   )

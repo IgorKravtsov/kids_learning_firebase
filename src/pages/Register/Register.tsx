@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
@@ -14,35 +14,26 @@ import { RouteNames } from '../../routes'
 import { useStyles } from './register.styles'
 import { useAppDispatch } from 'redux/hooks/typedHooks'
 import { register } from 'redux/slices/userSlice'
-import { useAppSelector } from 'redux/hooks/typedHooks'
-import { selectUser } from 'redux/slices/userSlice'
-import { useEffect } from 'react'
 
 const Register: React.FC = (): React.ReactElement => {
   const classes = useStyles()
 
-  const { user } = useAppSelector(selectUser)
-
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const [email, setEmail] = useState('superletsplay7@gmail.com')
   const [password, setPassword] = useState('111111')
   const [confirmPass, setConfirmPass] = useState('111111')
-  const [visible, setVisible] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (password !== confirmPass) return
 
-    setVisible(true)
     const response = await dispatch(register({ email, password }))
-    console.log(response)
-    setVisible(false)
+    if (response?.meta.requestStatus !== 'rejected') {
+      navigate(RouteNames.HOME)
+    }
   }
-
-  useEffect(() => {
-    console.log('===user===', user)
-  }, [user])
 
   return (
     <Grid>
@@ -51,7 +42,9 @@ const Register: React.FC = (): React.ReactElement => {
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography variant='h5'>Зарегистрироваться</Typography>
+          <Typography variant='h5' className={classes.title}>
+            Регистрация
+          </Typography>
         </Grid>
         <form onSubmit={handleSubmit}>
           <TextField
@@ -62,7 +55,6 @@ const Register: React.FC = (): React.ReactElement => {
             fullWidth
             required
             className={classes.emailField}
-            // style={{ marginTop: '10px' }}
           />
           <TextField
             value={password}
@@ -88,15 +80,14 @@ const Register: React.FC = (): React.ReactElement => {
             Зарегистрироваться
           </Button>
         </form>
-        <Typography variant='body2' className={classes.forgotPassLabel}>
+        {/* <Typography variant='body2' className={classes.forgotPassLabel}>
           <Link to='#'>Забыли пароль?</Link>
         </Typography>
         <Typography variant='body2'>
           {' '}
           Уже есть аккаунт?<Link to={RouteNames.LOGIN}>Войти</Link>
-        </Typography>
+        </Typography> */}
       </Paper>
-      {visible && <h1>Пошла загрузка...</h1>}
     </Grid>
   )
 }
